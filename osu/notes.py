@@ -2,8 +2,9 @@ from enum import Enum
 from osu.curves import bezier_curve, circle_curve, linear_curve, centripetal_curve
 
 class Position:
-    x: int
-    y: int
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
 
 class NoteType(Enum):
     SIMPLE = 0
