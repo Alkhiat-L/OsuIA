@@ -48,13 +48,13 @@ class SliderNote(Note):
     def __init__(self, position: Position, startTime: int, curvePoints: list[Position], sliderType: SliderType):
         super().__init__(position, startTime)
         if sliderType == SliderType.BEZIER:
-            self.control_points = bezier_curve(curvePoints)
+            self.controlPoints = bezier_curve(curvePoints)
         if sliderType == SliderType.CIRCLE:
-            self.control_points = circle_curve(curvePoints)
+            self.controlPoints = circle_curve(curvePoints)
         if sliderType == SliderType.LINEAR:
-            self.control_points = linear_curve(curvePoints)
+            self.controlPoints = linear_curve(curvePoints)
         if sliderType == SliderType.CENTRIPETAL:
-            self.control_points = centripetal_curve(curvePoints)     
+            self.controlPoints = centripetal_curve(curvePoints)     
     noteType = NoteType.SLIDER
     length: float
     repeats: int

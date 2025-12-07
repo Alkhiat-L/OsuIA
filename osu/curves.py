@@ -82,16 +82,16 @@ def circle_curve(vertices: list[Position]) -> list[Position]:
 
     radius = math.sqrt((b0x - b2x) ** 2 + (b0y - b2y) ** 2) / 2
 
-    initial_angle = math.atan2(b1y - b0y, b1x - b0x)
+    initialAngle = math.atan2(b1y - b0y, b1x - b0x)
     result.append(
         (
-            Position((centerX + math.cos(initial_angle) * radius),
-            (centerY + math.sin(initial_angle) * radius)),
+            Position((centerX + math.cos(initialAngle) * radius),
+            (centerY + math.sin(initialAngle) * radius)),
         )
     )
 
     for i in range(numPoints // 2):
-        angle = initial_angle + (i * 2 * math.pi / numPoints)
+        angle = initialAngle + (i * 2 * math.pi / numPoints)
         x = centerX + math.cos(angle) * radius
         y = centerY + math.sin(angle) * radius
         result.append(Position(x, y))
@@ -116,13 +116,13 @@ def linear_curve(vertices: list[Position]) -> list[Position]:
 
 def centripetal_curve(vertices: list[Position]) -> list[Position]:
     #Feito com IA, não sei se funciona direito
-    num_points = 50
+    numPoints = 50
     result = []
     
     points = [vertices[0]] + vertices + [vertices[-1]]
-    num_segments = len(points) - 3
+    numSegments = len(points) - 3
 
-    for i in range(1, num_segments + 1):
+    for i in range(1, numSegments + 1):
         
         p0 = points[i - 1]
         p1 = points[i]
@@ -140,14 +140,14 @@ def centripetal_curve(vertices: list[Position]) -> list[Position]:
         dy = p3.y - p2.y
         t3 = t2 + pow(math.sqrt(dx * dx + dy * dy), 0.5 / 2.0)
         
-        num_steps_per_segment = num_points // (len(vertices) - 1)
+        numStepsPerSegment = numPoints // (len(vertices) - 1)
         
         if i == 1:
             result.append(p1)
 
-        for j in range(1, num_steps_per_segment + 1):
+        for j in range(1, numStepsPerSegment + 1):
 
-            t = t1 + (t2 - t1) * (j / num_steps_per_segment)
+            t = t1 + (t2 - t1) * (j / numStepsPerSegment)
 
             A = (t1 - t) / (t2 - t0) * (t2 - t) / (t3 - t0) * (t2 - t) / (t2 - t1)
             B = (t - t0) / (t2 - t0) * (t2 - t) / (t3 - t1) * (t2 - t) / (t2 - t1)

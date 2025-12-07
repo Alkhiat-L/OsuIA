@@ -1,7 +1,7 @@
-import osu.notes as notes
+from osu.notes import Note
 from enum import Enum
 
-beatmap_file = "path/to/beatmap.osu"
+beatmapFile = "path/to/beatmap.osu"
 
 def parse_beatmap(file_path: str) -> dict:
     # Implementation for parsing the beatmap file
@@ -30,18 +30,18 @@ class TimingPoint:
     uninherited: bool
 
 class Beatmap:
-    circle_size: float
-    overall_difficulty: float
-    approach_rate: float
-    slider_multiplier: float
-    slider_tick_rate: float
-    timing_points: list[TimingPoint]
-    notes: list[notes.Note]
+    circleSize: float
+    overallDifficulty: float
+    approachRate: float
+    sliderMultiplier: float
+    sliderTickRate: float
+    timingPoints: list[TimingPoint]
+    notes: list[Note]
     modifiers: list[Modifier]
 
-    def __init__(self, file_path: str):
-        self.load_from_file(file_path)
+    def __init__(self, filePath: str):
+        self.load_from_file(filePath)
 
-    def load_from_file(self, file_path: str):
+    def load_from_file(self, filePath: str):
         # Implementation for loading the beatmap file
         pass
