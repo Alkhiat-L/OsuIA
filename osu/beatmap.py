@@ -30,12 +30,12 @@ class TimingPoint:
 
     def load_from_line(line: str):
         parts = line.split(',')
-        tp = TimingPoint()
-        tp.time = int(parts[0])
-        tp.beatLength = float(parts[1])
-        tp.meter = int(parts[2])
-        tp.uninherited = parts[6] == '1'
-        return tp
+        timingPoint = TimingPoint()
+        timingPoint.time = int(parts[0])
+        timingPoint.beatLength = float(parts[1])
+        timingPoint.meter = int(parts[2])
+        timingPoint.uninherited = parts[6] == '1'
+        return timingPoint
 
 class Beatmap:
     circleSize: float
@@ -52,31 +52,31 @@ class Beatmap:
 
     def load_from_file(self, filePath: str):
         rawFile = open(filePath, 'r', encoding='utf-8').read()
-        circleSizeIndex = rawFile.find('CircleSize')
-        self.circleSize = rawFile[circleSizeIndex +11: rawFile.find('\n', circleSizeIndex)]
+        circleSizeIndex = rawFile.find('CircleSize:')
+        self.circleSize = rawFile[circleSizeIndex + len('CircleSize:'): rawFile.find('\n', circleSizeIndex)]
 
-        overallDifficultyIndex = rawFile.find('OverallDifficulty')
-        self.overallDifficulty = rawFile[overallDifficultyIndex +18: rawFile.find('\n', overallDifficultyIndex)]
+        overallDifficultyIndex = rawFile.find('OverallDifficulty:')
+        self.overallDifficulty = rawFile[overallDifficultyIndex + len('OverallDifficulty:'): rawFile.find('\n', overallDifficultyIndex)]
         
-        approachRateIndex = rawFile.find('ApproachRate')
-        self.approachRate = rawFile[approachRateIndex +13: rawFile.find('\n', approachRateIndex)]
+        approachRateIndex = rawFile.find('ApproachRate:')
+        self.approachRate = rawFile[approachRateIndex + len('ApproachRate:'): rawFile.find('\n', approachRateIndex)]
 
-        sliderMultiplierIndex = rawFile.find('SliderMultiplier')
-        self.sliderMultiplier = rawFile[sliderMultiplierIndex +17: rawFile.find('\n', sliderMultiplierIndex)]
+        sliderMultiplierIndex = rawFile.find('SliderMultiplier:')
+        self.sliderMultiplier = rawFile[sliderMultiplierIndex + len('SliderMultiplier:'): rawFile.find('\n', sliderMultiplierIndex)]
         
-        sliderTickRateIndex = rawFile.find('SliderTickRate')
-        self.sliderTickRate = rawFile[sliderTickRateIndex +15: rawFile.find('\n', sliderTickRateIndex)]
+        sliderTickRateIndex = rawFile.find('SliderTickRate:')
+        self.sliderTickRate = rawFile[sliderTickRateIndex + len('SliderTickRat'): rawFile.find('\n', sliderTickRateIndex)]
 
-        TimingPointSectionStartIndex = rawFile.find('[TimingPoints]')
-        TimingPointSectionEndIndex = rawFile.find('\n\n', TimingPointSectionStartIndex)
-        timingPointLines = rawFile[TimingPointSectionStartIndex +15: TimingPointSectionEndIndex].split('\n')
+        timingPointSectionStartIndex = rawFile.find('[TimingPoints]\n')
+        timingPointSectionEndIndex = rawFile.find('\n\n', timingPointSectionStartIndex)
+        timingPointLines = rawFile[timingPointSectionStartIndex + len('[TimingPoints]\n'): timingPointSectionEndIndex].split('\n')
         self.timingPoints = []
         for line in timingPointLines:
             self.timingPoints.append(TimingPoint.load_from_line(line))
         
-        NoteSectionStartIndex = rawFile.find('[HitObjects]')
-        NoteSectionEndIndex = rawFile.find('\n\n', NoteSectionStartIndex)
-        noteLines = rawFile[NoteSectionStartIndex +13: NoteSectionEndIndex].split('\n')
+        noteSectionStartIndex = rawFile.find('[HitObjects]\n')
+        noteSectionEndIndex = rawFile.find('\n\n', noteSectionStartIndex)
+        noteLines = rawFile[noteSectionStartIndex + len('[HitObjects]\n'): noteSectionEndIndex].split('\n')
         self.notes = []
         for line in noteLines:
             self.notes.append(Note.load_from_line(line))
