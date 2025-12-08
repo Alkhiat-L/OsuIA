@@ -2,8 +2,6 @@ from enum import Enum
 from curves import bezier_curve, circle_curve, linear_curve, centripetal_curve
 from utils import Position, scale_position
 
-
-
 class NoteType(Enum):
     SIMPLE = 0
     SPINNER = 1
@@ -15,10 +13,10 @@ class SliderType(Enum):
     LINEAR = 2
     CENTRIPETAL = 3
 
-is_simple_note = 0b00000001
-is_slider = 0b00000010
-is_new_combo = 0b00000100
-is_spinner = 0b00001000
+is_simple_note = 0b0001
+is_slider = 0b0010
+is_new_combo = 0b0100
+is_spinner = 0b1000
 
 class Note:
     def __init__(self, position: Position, startTime: int):
