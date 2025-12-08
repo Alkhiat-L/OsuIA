@@ -1,9 +1,11 @@
 import math
-from osu.notes import Position
+from utils import Position
 
 def bezier_curve(vertices: list[Position]) -> list[Position]:
     numPoints = 50
     result = []
+    if len(vertices) < 3:
+        return linear_curve(vertices)
 
     b0x = vertices[0].x
     b0y = vertices[0].y
@@ -83,12 +85,12 @@ def circle_curve(vertices: list[Position]) -> list[Position]:
     radius = math.sqrt((b0x - b2x) ** 2 + (b0y - b2y) ** 2) / 2
 
     initialAngle = math.atan2(b1y - b0y, b1x - b0x)
-    result.append(
-        (
-            Position((centerX + math.cos(initialAngle) * radius),
-            (centerY + math.sin(initialAngle) * radius)),
-        )
-    )
+#    result.append(
+#        (
+#            Position((centerX + math.cos(initialAngle) * radius),
+#            (centerY + math.sin(initialAngle) * radius)),
+#        )
+#    )
 
     for i in range(numPoints // 2):
         angle = initialAngle + (i * 2 * math.pi / numPoints)
@@ -148,11 +150,6 @@ def centripetal_curve(vertices: list[Position]) -> list[Position]:
         for j in range(1, numStepsPerSegment + 1):
 
             t = t1 + (t2 - t1) * (j / numStepsPerSegment)
-
-            A = (t1 - t) / (t2 - t0) * (t2 - t) / (t3 - t0) * (t2 - t) / (t2 - t1)
-            B = (t - t0) / (t2 - t0) * (t2 - t) / (t3 - t1) * (t2 - t) / (t2 - t1)
-            C = (t - t0) / (t3 - t0) * (t - t1) / (t3 - t1) * (t2 - t) / (t2 - t1)
-            D = (t - t0) / (t3 - t0) * (t - t1) / (t3 - t1) * (t - t2) / (t3 - t2)
             
             a1 = (t1 - t) / (t1 - t0) * p0.x + (t - t0) / (t1 - t0) * p1.x
             a2 = (t2 - t) / (t2 - t1) * p1.x + (t - t1) / (t2 - t1) * p2.x
